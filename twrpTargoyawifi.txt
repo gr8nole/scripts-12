@@ -1,0 +1,37 @@
+
+file=~/Builds/$(date +"%m-%d-%Y")/T110/recovery.img
+if [ -e "$file" ]
+then
+(cd ~/Builds/$(date +"%m-%d-%Y")/T110/
+tar -c recovery.img > T110.TWRP.$BUILD.tar
+md5sum -t T110.TWRP.$BUILD.tar >> T110.TWRP.$BUILD.tar
+mv T110.TWRP.$BUILD.tar T110.TWRP.$BUILD.tar.md5
+cp recovery.img T110.TWRP.$BUILD.img
+
+echo 'ui_print("");
+ui_print("");
+ui_print("         TWRP '$BUILD'");
+ui_print("       compiled by gr8nole   ");
+ui_print("  for the Galaxy Tab 3 Lite T110   ");
+ui_print("");
+ui_print(">>>------;;----->");
+ui_print(" ");
+ui_print("Flashing recovery");
+ui_print(" ");
+ui_print(">>>------;;----->");
+set_progress(0.100000);
+package_extract_file("recovery.img", "/dev/block/platform/sdhci-pxav3.2/by-name/RECOVERY");
+set_progress(1.000000);
+ui_print("Done, reboot recovery...");
+show_progress(1.000000, 0);
+ui_print("");
+ui_print("Done");
+ui_print("");' > ~/scripts/T110/META-INF/com/google/android/updater-script
+
+cp -ar ~/scripts/T110/META-INF ~/Builds/$(date +"%m-%d-%Y")/T110/META-INF
+zip -r T110.TWRP.$BUILD.flashable.zip META-INF recovery.img
+
+rm -r ~/Builds/$(date +"%m-%d-%Y")/T110/META-INF)
+exit
+fi
+done

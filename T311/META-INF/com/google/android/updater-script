@@ -1,0 +1,20 @@
+ui_print("");
+ui_print("");
+ui_print("		   TWRP 2.8.2.0");
+ui_print("      	compiled by gr8nole   ");
+ui_print("          for the Galaxy Tab 3 8 inch    ");
+ui_print("");
+ui_print("");
+ui_print("");
+show_progress(1.000000, 0);
+
+ui_print("Flashing Recovery...");
+set_progress(0.100000);
+package_extract_file("recovery.img", "/dev/block/platform/dw_mmc/by-name/RECOVERY");
+
+set_progress(1.000000);
+ui_print("Done, reboot recovery...");
+show_progress(1.000000, 0);
+
+
+ui_print("");

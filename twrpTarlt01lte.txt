@@ -1,0 +1,38 @@
+
+file=~/Builds/$(date +"%m-%d-%Y")/T315/recovery.img
+if [ -e "$file" ]
+then
+(cd ~/Builds/$(date +"%m-%d-%Y")/T315/
+tar -c recovery.img > T315.TWRP.$BUILD.tar
+md5sum -t T315.TWRP.$BUILD.tar >> T315.TWRP.$BUILD.tar
+mv T315.TWRP.$BUILD.tar T315.TWRP.$BUILD.tar.md5
+cp recovery.img T315.TWRP.$BUILD.img
+
+echo 'ui_print("");
+ui_print("");
+ui_print("		    TWRP '$BUILD'");
+ui_print("      	compiled by gr8nole   ");
+ui_print("          for the Galaxy Tab 3 8 inch    ");
+ui_print("");
+ui_print("");
+ui_print("");
+show_progress(1.000000, 0);
+
+ui_print("Flashing Recovery...");
+set_progress(0.100000);
+package_extract_file("recovery.img", "/dev/block/platform/dw_mmc/by-name/RECOVERY");
+
+set_progress(1.000000);
+ui_print("Done, reboot recovery...");
+show_progress(1.000000, 0);
+
+
+ui_print("");' > ~/scripts/T315/META-INF/com/google/android/updater-script
+
+cp -ar ~/scripts/T315/META-INF ~/Builds/$(date +"%m-%d-%Y")/T315/META-INF
+zip -r T315.TWRP.$BUILD.flashable.zip META-INF recovery.img
+
+rm -r ~/Builds/$(date +"%m-%d-%Y")/T315/META-INF)
+exit
+fi
+done

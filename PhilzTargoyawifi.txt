@@ -1,0 +1,55 @@
+
+file=~/Builds/$(date +"%m-%d-%Y")/T110/recovery.img
+if [ -e "$file" ]
+then
+(cd ~/Builds/$(date +"%m-%d-%Y")/T110/
+tar -c recovery.img > philz_touch_$PHILZ_BUILD-goyawifi.tar
+md5sum -t philz_touch_$PHILZ_BUILD-goyawifi.tar >> philz_touch_$PHILZ_BUILD-goyawifi.tar
+mv philz_touch_$PHILZ_BUILD-goyawifi.tar philz_touch_$PHILZ_BUILD-goyawifi.tar.md5
+cp recovery.img philz_touch_$PHILZ_BUILD-goyawifi.img
+
+echo 'ui_print("");
+ui_print("");
+ui_print(" ###################### ");
+ui_print("  PhilZ Touch Recovery  ");
+ui_print("  Full Touch CWM Based  ");
+ui_print("            +           ");
+ui_print("   Advanced  Features   ");
+ui_print("     Phone  goyawifi     ");
+ui_print(" ###################### ");
+ui_print("");
+ui_print("");
+show_progress(1.000000, 0);
+
+assert(getprop("ro.product.device") == "SM-T110" || getprop("ro.build.product") == "SM-T110" ||
+    getprop("ro.product.device") == "goyawifi" || getprop("ro.build.product") == "goyawifi" || abort("This package is for 'SM-T110,goyawifi' devices; this is a '" + getprop("ro.product.device") + "'."););
+
+ui_print("Flashing Recovery...");
+set_progress(0.100000);
+package_extract_file("recovery.img", "/dev/block/platform/sdhci-pxav3.2/by-name/RECOVERY");
+
+set_progress(1.000000);
+show_progress(1.000000, 0);
+
+ui_print("");
+ui_print(" ###################### ");
+ui_print("  PhilZ Touch Recovery  ");
+ui_print("  Full Touch CWM Based  ");
+ui_print("            +           ");
+ui_print("   Advanced  Features   ");
+ui_print("     '$PHILZ_BUILD  ' CWM'$BUILD' ");
+ui_print("      Phone  goyawifi     ");
+ui_print(" ###################### ");
+
+ui_print("");
+ui_print("Brought to you by * Phil3759 *");
+ui_print("http://forum.xda-developers.com/showthread.php?t=2201860");
+ui_print("Done, reboot recovery...");' > ~/scripts/T110/META-INF/com/google/android/updater-script
+
+cp -ar ~/scripts/T110/META-INF ~/Builds/$(date +"%m-%d-%Y")/T110/META-INF
+zip -r philz_touch_$PHILZ_BUILD-goyawifi.zip META-INF recovery.img
+
+rm -r ~/Builds/$(date +"%m-%d-%Y")/T110/META-INF)
+exit
+fi
+done

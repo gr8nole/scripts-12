@@ -1,0 +1,55 @@
+
+file=~/Builds/$(date +"%m-%d-%Y")/T210/recovery.img
+if [ -e "$file" ]
+then
+(cd ~/Builds/$(date +"%m-%d-%Y")/T210/
+tar -c recovery.img > philz_touch_$PHILZ_BUILD-lt02wifi.tar
+md5sum -t philz_touch_$PHILZ_BUILD-lt02wifi.tar >> philz_touch_$PHILZ_BUILD-lt02wifi.tar
+mv philz_touch_$PHILZ_BUILD-lt02wifi.tar philz_touch_$PHILZ_BUILD-lt02wifi.tar.md5
+cp recovery.img philz_touch_$PHILZ_BUILD-lt02wifi.img
+
+echo 'ui_print("");
+ui_print("");
+ui_print(" ###################### ");
+ui_print("  PhilZ Touch Recovery  ");
+ui_print("  Full Touch CWM Based  ");
+ui_print("            +           ");
+ui_print("   Advanced  Features   ");
+ui_print("     Phone  lt02wifi     ");
+ui_print(" ###################### ");
+ui_print("");
+ui_print("");
+show_progress(1.000000, 0);
+
+assert(getprop("ro.product.device") == "SM-T210" || getprop("ro.build.product") == "SM-T210" ||
+    getprop("ro.product.device") == "lt02wifi" || getprop("ro.build.product") == "lt02wifi" || abort("This package is for 'SM-T210,lt02wifi' devices; this is a '" + getprop("ro.product.device") + "'."););
+
+ui_print("Flashing Recovery...");
+set_progress(0.100000);
+package_extract_file("recovery.img", "/dev/block/mmcblk0p10");
+
+set_progress(1.000000);
+show_progress(1.000000, 0);
+
+ui_print("");
+ui_print(" ###################### ");
+ui_print("  PhilZ Touch Recovery  ");
+ui_print("  Full Touch CWM Based  ");
+ui_print("            +           ");
+ui_print("   Advanced  Features   ");
+ui_print("     '$PHILZ_BUILD  ' CWM'$BUILD' ");
+ui_print("      Phone  lt02wifi     ");
+ui_print(" ###################### ");
+
+ui_print("");
+ui_print("Brought to you by * Phil3759 *");
+ui_print("http://forum.xda-developers.com/showthread.php?t=2201860");
+ui_print("Done, reboot recovery...");' > ~/scripts/T210/META-INF/com/google/android/updater-script
+
+cp -ar ~/scripts/T210/META-INF ~/Builds/$(date +"%m-%d-%Y")/T210/META-INF
+zip -r philz_touch_$PHILZ_BUILD-lt02wifi.zip META-INF recovery.img
+
+rm -r ~/Builds/$(date +"%m-%d-%Y")/T210/META-INF)
+exit
+fi
+done

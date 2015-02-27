@@ -1,0 +1,57 @@
+
+file=~/Builds/$(date +"%m-%d-%Y")/i605/recovery.img
+if [ -e "$file" ]
+then
+(cd ~/Builds/$(date +"%m-%d-%Y")/i605/
+tar -c recovery.img > philz_touch_$PHILZ_BUILD-i605.tar
+md5sum -t philz_touch_$PHILZ_BUILD-i605.tar >> philz_touch_$PHILZ_BUILD-i605.tar
+mv philz_touch_$PHILZ_BUILD-i605.tar philz_touch_$PHILZ_BUILD-i605.tar.md5
+cp recovery.img philz_touch_$PHILZ_BUILD-i605.img
+
+echo 'ui_print("");
+ui_print("");
+ui_print(" ###################### ");
+ui_print("  PhilZ Touch Recovery  ");
+ui_print("  Full Touch CWM Based  ");
+ui_print("            +           ");
+ui_print("   Advanced  Features   ");
+ui_print("      Phone  i605     ");
+ui_print(" ###################### ");
+ui_print("");
+ui_print("");
+show_progress(1.000000, 0);
+
+assert(getprop("ro.product.device") == "t0ltevzw" || getprop("ro.build.product") == "t0ltevzw" ||
+    getprop("ro.product.device") == "t0ltecdma" || getprop("ro.build.product") == "t0ltecdma" ||
+    getprop("ro.product.device") == "i605" || getprop("ro.build.product") == "i605" ||
+    getprop("ro.product.device") == "SCH-I605" || getprop("ro.build.product") == "SCH-I605" || abort("This package is for 't0ltevzw,t0ltecdma,i605,SCH-I605' devices; this is a '" + getprop("ro.product.device") + "'."););
+
+ui_print("Flashing Recovery...");
+set_progress(0.100000);
+package_extract_file("recovery.img", "/dev/block/mmcblk0p9");
+
+set_progress(1.000000);
+show_progress(1.000000, 0);
+
+ui_print("");
+ui_print(" ###################### ");
+ui_print("  PhilZ Touch Recovery  ");
+ui_print("  Full Touch CWM Based  ");
+ui_print("            +           ");
+ui_print("   Advanced  Features   ");
+ui_print("     '$PHILZ_BUILD  ' CWM'$BUILD' ");
+ui_print("      Phone  i605     ");
+ui_print(" ###################### ");
+
+ui_print("");
+ui_print("Brought to you by * Phil3759 *");
+ui_print("http://forum.xda-developers.com/showthread.php?t=2201860");
+ui_print("Done, reboot recovery...");' > ~/scripts/i605/META-INF/com/google/android/updater-script
+
+cp -ar ~/scripts/i605/META-INF ~/Builds/$(date +"%m-%d-%Y")/i605/META-INF
+zip -r philz_touch_$PHILZ_BUILD-i605.zip META-INF recovery.img
+
+rm -r ~/Builds/$(date +"%m-%d-%Y")/i605/META-INF)
+exit
+fi
+done
